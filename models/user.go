@@ -1,9 +1,9 @@
 package models
 
 type User struct {
-	ID        int
-	FirstName string
-	LastName  string
+	ID        int    `json:"id"`
+	FirstName string `json:"firstname"`
+	LastName  string `json:"lastname"`
 }
 
 func AllUsers() ([]*User, error) {
@@ -26,4 +26,17 @@ func AllUsers() ([]*User, error) {
 		return nil, err
 	}
 	return usrs, nil
+}
+
+func AddUser(firstname string, lastname string) (int64, error) {
+	res, err := db.Exec("INSERT INTO Users (firstname, lastname) VALUES ($1, $2)", firstname, lastname)
+	if err != nil {
+		return 0, err
+	}
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }

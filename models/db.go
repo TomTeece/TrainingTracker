@@ -22,6 +22,4 @@ func InitDB() {
 
 	statement, _ := db.Prepare("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, firstname TEXT, lastname TEXT)")
 	statement.Exec()
-	statement, _ = db.Prepare("INSERT INTO Users (firstname, lastname) VALUES (?, ?)")
-	statement.Exec("Tom", "Teece")
 }
