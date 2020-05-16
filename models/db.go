@@ -20,6 +20,9 @@ func InitDB() {
 		log.Panic(err)
 	}
 
-	statement, _ := db.Prepare("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, firstname TEXT, lastname TEXT)")
-	statement.Exec()
+	statement1, _ := db.Prepare("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, firstname TEXT, lastname TEXT)")
+	statement1.Exec()
+
+	statement2, _ := db.Prepare("CREATE TABLE IF NOT EXISTS Training (id INTEGER PRIMARY KEY, userId INTEGER, date TEXT, activity TEXT)")
+	statement2.Exec()
 }

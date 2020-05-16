@@ -2,8 +2,8 @@ package models
 
 type User struct {
 	ID        int    `json:"id"`
-	FirstName string `json:"firstname"`
-	LastName  string `json:"lastname"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
 }
 
 func AllUsers() ([]*User, error) {
