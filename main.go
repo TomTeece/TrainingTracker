@@ -13,18 +13,18 @@ func main() {
 	fmt.Println("listening on port 3001")
 	http.HandleFunc("/Users", usersIndex)
 	http.HandleFunc("/User", handleUser)
-	http.HandleFunc("/Training", handleTraining)
+	http.HandleFunc("/Climbing", handleClimbing)
 	http.ListenAndServe(":3001", nil)
 }
 
-func handleTraining(w http.ResponseWriter, r *http.Request) {
+func handleClimbing(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	if r.Method == "POST" {
-		var training models.Training
-		_ = json.NewDecoder(r.Body).Decode(&training)
+		var climbing models.Climbing
+		_ = json.NewDecoder(r.Body).Decode(&climbing)
 
-		id, err := models.AddTraining(training)
+		id, err := models.AddClimbing(climbing)
 		if err != nil {
 			fmt.Println(err)
 			http.Error(w, http.StatusText(400), 400)
@@ -35,15 +35,15 @@ func handleTraining(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Method == "GET" {
-		var training models.Training
-		_ = json.NewDecoder(r.Body).Decode(&training)
-		fmt.Println(training.UserID)
-		usrTraining, err := models.TrainingByUserID(training)
+		var climbing models.Climbing
+		_ = json.NewDecoder(r.Body).Decode(&climbing)
+		fmt.Println(climbing.UserID)
+		usrClimbing, err := models.ClimbingByUserID(climbing)
 		if err != nil {
 			http.Error(w, http.StatusText(500), 500)
 			return
 		}
-		json.NewEncoder(w).Encode(usrTraining)
+		json.NewEncoder(w).Encode(usrClimbing)
 		return
 	} else {
 		http.Error(w, http.StatusText(405), 405)
