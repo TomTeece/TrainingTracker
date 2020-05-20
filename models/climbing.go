@@ -41,3 +41,16 @@ func ClimbingByUserID(climbing Climbing) ([]*Climbing, error) {
 	}
 	return usrClimbing, nil
 }
+
+// UpdateClimbing update climbing
+func UpdateClimbing(climbing Climbing) (int64, error) {
+	res, err := db.Exec("UPDATE Climbing SET userId = ($1), date = ($2), activity = ($3) WHERE id = ($4)", climbing.UserID, climbing.Date, climbing.Activity, climbing.ID)
+	if err != nil {
+		return 0, err
+	}
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
+}

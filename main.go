@@ -19,6 +19,22 @@ func main() {
 
 func handleClimbing(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	if r.Method == "PUT" {
+		var climbing models.Climbing
+		_ = json.NewDecoder(r.Body).Decode(&climbing)
+
+		id, err := models.UpdateClimbing(climbing)
+		if err != nil {
+			fmt.Println(err)
+			http.Error(w, http.StatusText(400), 400)
+			return
+		}
+
+		json.NewEncoder(w).Encode(id)
+		return
+	}
 
 	if r.Method == "POST" {
 		var climbing models.Climbing
@@ -53,6 +69,7 @@ func handleClimbing(w http.ResponseWriter, r *http.Request) {
 
 func handleUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), 405)
@@ -73,6 +90,7 @@ func handleUser(w http.ResponseWriter, r *http.Request) {
 
 func usersIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	if r.Method != "GET" {
 		http.Error(w, http.StatusText(405), 405)
